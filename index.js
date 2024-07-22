@@ -9,39 +9,22 @@ let createEmployeeRecord = function(row){
         timeOutEvents: []
     }
 }
-
-function createEmployeeRecords(arrayedArrays) {
-    let employeeRecords = arrayedArrays.map(createEmployeeRecord)
-    return employeeRecords
+let createEmployeeRecords = function(employeeRowData) {
+    return employeeRowData.map(function(row){
+        return createEmployeeRecord(row)
+    })
 }
 
-function createTimeInEvent(employeeRecord, dateStamp) {
-   let dateArray = dateStamp.split(" ")
-   let YMD = dateArray[0]
-   let time = dateArray[1]
-   let hourInt = parseInt(time, 10)
-   let timeIn = {
-    type : "TimeIn",
-    hour : hourInt,
-    date : YMD
-   }
-   employeeRecord.timeInEvents.push(timeIn)
-   return employeeRecord
-}
+let createTimeInEvent = function(employee, dateStamp){
+    let [date, hour] = dateStamp.split(' ')
 
-function createTimeOutEvent(employeeRecord, dateStamp) {
-   let dateArray = dateStamp.split(" ")
-   let YMD = dateArray[0]
-   let time = dateArray[1]
-   let hourInt = parseInt(time, 10)
-   let timeOut = {
-    type : "TimeOut",
-    hour : hourInt,
-    date : YMD
-   }
-   employeeRecord.timeOutEvents.push(timeOut)
-   return employeeRecord
+    employee.timeInEvents.push({
+        type: "TimeIn",
+        hour: parseInt(hour, 10),
+        date,
+    })
 
+    return employee
 }
 
 let createTimeOutEvent = function(employee, dateStamp){
